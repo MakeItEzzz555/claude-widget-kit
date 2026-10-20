@@ -1,7 +1,7 @@
 {
   "name": "turn-meters",
-  "version": "0.1.0",
-  "description": "Effort meter, task progress with ETA, usage rings and agent cards under the working line",
+  "version": "0.2.0",
+  "description": "Usage rings, effort, task ETA and a live session dashboard: tokens, turns, context, limits, agents and activity",
   "author": { "name": "MakeItEzzz555" },
   "repository": "https://github.com/MakeItEzzz555/claude-widget-kit",
   "license": "MIT",
