@@ -2,6 +2,8 @@
 
 # Claude Widget Kit
 
+<img src="assets/logo.png" alt="Claude Widget Kit logo" width="420">
+
 ### Your Claude Code session, at a glance.
 
 **A mods pack for Claude Code: usage rings, effort, task ETA, and an agents panel inside the terminal.**
