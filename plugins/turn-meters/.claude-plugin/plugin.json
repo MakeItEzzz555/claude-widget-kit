@@ -1,0 +1,10 @@
+{
+  "name": "turn-meters",
+  "version": "0.1.0",
+  "description": "Effort meter, task progress with ETA, usage rings and agent cards under the working line",
+  "author": { "name": "MakeItEzzz555" },
+  "repository": "https://github.com/MakeItEzzz555/claude-widget-kit",
+  "license": "MIT",
+  "keywords": ["widgets", "usage", "rate-limits", "progress", "agents", "mods"],
+  "types": "./types/index.d.ts"
+}
