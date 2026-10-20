@@ -1,10 +1,14 @@
 <div align="center">
 
-# ◕ Claude Widget Kit
+# Claude Widget Kit
 
 ### Your Claude Code session, at a glance.
 
-**A mods pack for Claude Code: live usage rings, an effort meter, task ETA and an agents panel, drawn right inside the terminal UI.**
+**A mods pack for Claude Code: usage rings, effort, task ETA, and an agents panel inside the terminal.**
+
+<img src="assets/showcase.png" alt="Claude Widget Kit concept illustration featuring a terminal session and telemetry cards" width="100%">
+
+<sub>Conceptual UI illustration of the visual direction, not a live screenshot. Some pictured cards and figures are planned for v0.2.0; see the supported features below.</sub>
 
 [![validate](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml/badge.svg)](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml)
 ![claude code](https://img.shields.io/badge/Claude%20Code-mods-d97757)
@@ -23,16 +27,7 @@
 
 Claude Code already knows. **Claude Widget Kit puts it on screen.** A band above the prompt holds three braille rings, a heat-coloured effort meter and a progress bar that learns your plan's pace. A side panel gives every running agent its own live card. Nothing to run alongside it: the widgets live inside Claude Code.
 
-```text
- ⢀⣴⡶⠿⠿⢶⣦⡀    ⢀⣴⡶⠿⠿⢶⣦⡀    ⢀⣴⡶⠿⠿⢶⣦⡀                                         ╭──────── Agents ────────╮
-⢰⡿⠋    ⠙⢿⡆  ⢰⡿⠋    ⠙⢿⡆  ⢰⡿⠋    ⠙⢿⡆                                        │ ● Claude main          │
-⣿⡇ 70%  ⢸⣿  ⣿⡇ 15%  ⢸⣿  ⣿⡇ 60%  ⢸⣿   effort ▂▃▄▆█ high · opus-5-5            │ ▸ Run the tests        │
-⠸⣷⣄    ⣠⣾⠇  ⠸⣷⣄    ⣠⣾⠇  ⠸⣷⣄    ⣠⣾⠇   tasks  ███████████░░░░░ 2/4 · est. 6 min │ ████████░░░ 2/4 · 6 min│
- ⠈⠻⠷⣶⣶⠾⠟⠁    ⠈⠻⠷⣶⣶⠾⠟⠁    ⠈⠻⠷⣶⣶⠾⠟⠁                                         │ ▂▃▄▆█ high · opus-5-5  │
- 5h left    week left    ctx left                                          ╰────────────────────────╯
-```
 
-*Illustration; real colours and layout follow your terminal width.*
 
 ## The mods
 
