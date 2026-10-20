@@ -1,10 +1,16 @@
 <div align="center">
 
-# ◕ Claude Widget Kit
+# Claude Widget Kit
+
+<img src="assets/logo.png" alt="Claude Widget Kit logo" width="420">
 
 ### Your Claude Code session, at a glance.
 
 **A mods pack for Claude Code: usage rings, effort, task ETA and a live session dashboard (tokens, turns, context, limits, agents, activity), drawn right inside the terminal UI.**
+
+<img src="assets/showcase.png" alt="Claude Widget Kit concept illustration featuring a terminal session and telemetry cards" width="100%">
+
+<sub>Conceptual illustration of the visual direction, not a live screenshot. The real terminal capture is below.</sub>
 
 [![validate](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml/badge.svg)](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml)
 ![claude code](https://img.shields.io/badge/Claude%20Code-mods-d97757)
