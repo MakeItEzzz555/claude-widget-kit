@@ -134,17 +134,26 @@ export const fitTail = (text: string, room: number) => {
   return chars.length <= room ? text : `…${chars.slice(chars.length - Math.max(1, room - 1)).join('')}`
 }
 
-// `a/b/c/file.ts` -> `c/file.ts`: enough to recognise, never the full path
-export const shortPath = (path: string) => path.split('/').filter(Boolean).slice(-2).join('/')
+// `a/b/c/file.ts` -> `c/file.ts`: enough to recognise, never the full path; bidi and zero-width characters dropped
+export const shortPath = (path: string) =>
+  path
+    .replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029\p{Cf}]/gu, '')
+    .split('/')
+    .filter(Boolean)
+    .slice(-2)
+    .join('/')
 
-const WORD = /^[a-z][\w:.@-]{0,23}$/i
+const PROGRAM = /^[a-z][\w.+-]{0,23}$/i
+// only these programs show a second word, and only a plain subcommand: anything else could be an argument
+const WITH_SUBCOMMANDS = new Set(['git', 'npm', 'pnpm', 'yarn', 'bun', 'npx', 'cargo', 'swift', 'go', 'docker', 'kubectl', 'gh', 'make', 'pip', 'uv', 'poetry', 'brew', 'deno', 'dotnet', 'mvn', 'gradle', 'rake', 'bundle', 'composer', 'xcodebuild', 'codex', 'claude', 'graphify'])
+const SUBCOMMAND = /^[a-z][a-z-]{0,15}$/
 
 /** `FOO=1 npm test -- --x` -> `npm test`: the program and its subcommand, never the arguments. */
 export function commandName(command: string) {
   const words = command.split(/[;&|\n]/)[0]?.trim().split(/\s+/).filter(word => !/^\w+=/.test(word)) ?? []
   const program = words[0]?.split('/').pop()
-  if (program === undefined || !WORD.test(program)) return 'a command'
-  return words[1] !== undefined && WORD.test(words[1]) ? `${program} ${words[1]}` : program
+  if (program === undefined || !PROGRAM.test(program)) return 'a command'
+  return WITH_SUBCOMMANDS.has(program) && words[1] !== undefined && SUBCOMMAND.test(words[1]) ? `${program} ${words[1]}` : program
 }
 
 const text = (value: unknown) => (typeof value === 'string' ? value : '')
@@ -160,7 +169,8 @@ export function activityOf(tool: string, input: Record<string, unknown>, isError
   const edit = EDITS[tool]
   if (edit !== undefined) {
     const path = text(input.file_path) || text(input.notebook_path)
-    return { at, verb: edit, target: shortPath(path), tone: isError ? 'bad' : 'edit', note: failed, path }
+    // a failed edit is shown, but not counted as a file edited
+    return { at, verb: edit, target: shortPath(path), tone: isError ? 'bad' : 'edit', note: failed, ...(isError ? {} : { path }) }
   }
   if (tool === 'Read') return { at, verb: 'Read', target: shortPath(text(input.file_path)), tone: isError ? 'bad' : 'idle', note: failed }
   if (tool === 'Bash') return { at, verb: 'Ran', target: commandName(text(input.command)), tone: isError ? 'bad' : 'ok', note: failed }

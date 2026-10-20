@@ -36,7 +36,7 @@ const usage = atom({ plugin: 'turn-meters', key: 'usage' } as const, {
   contextWindow: null,
   startedAt: null,
 })
-const insights = atom({ plugin: 'turn-meters', key: 'insights' } as const, {
+const FRESH: Insights = {
   turns: { count: 0, totalMs: 0, lastMs: null, recent: [] },
   turnStartedAt: null,
   tokens: null,
@@ -44,7 +44,8 @@ const insights = atom({ plugin: 'turn-meters', key: 'insights' } as const, {
   compactions: 0,
   activity: [],
   files: [],
-})
+}
+const insights = atom({ plugin: 'turn-meters', key: 'insights' } as const, FRESH)
 const now = atom({ plugin: 'turn-meters', key: 'now' } as const, 0)
 
 const LEVELS = ['low', 'medium', 'high', 'xhigh', 'max']
@@ -151,6 +152,12 @@ const readUsage = (
 
 const measureUsage = async ($: EngineInterface) => {
   const now = await $.session.usage()
+  const before = (await read($, usage)).startedAt
+  // a /clear restarts startedAt without a session.start: the old conversation's counts go with it
+  if (before !== null && before !== now.startedAt) {
+    await update($, insights, () => FRESH)
+    await update($, plans, ({ [MAIN]: _, ...rest }) => rest)
+  }
   await writeUsage($, readUsage(now, now.startedAt))
 }
 
@@ -550,7 +557,8 @@ export const register: Register = on => {
         {rows}
       </Box>
     )
-    const meter = (share: number, size: number, color: string) => {
+    const meter = (share: number, wanted: number, color: string) => {
+      const size = Math.max(0, wanted)
       const filled = Math.round(Math.max(0, Math.min(1, share)) * size)
       return (
         <Text>
@@ -686,7 +694,13 @@ export const register: Register = on => {
               meter(left / 100, Math.min(inner, 30), leftColor(left)),
               <Text wrap="truncate-end">
                 <Text dimColor>{Math.round(percent)}% used · </Text>
-                {resetsAt === null ? <Text dimColor>reset time unknown</Text> : <Text>resets in {formatSpan(resetsAt - at)}</Text>}
+                {resetsAt === null ? (
+                  <Text dimColor>reset time unknown</Text>
+                ) : resetsAt <= at ? (
+                  <Text color="warning">reset due · waiting for a new reading</Text>
+                ) : (
+                  <Text>resets in {formatSpan(resetsAt - at)}</Text>
+                )}
               </Text>,
             ],
       )
