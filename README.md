@@ -12,6 +12,8 @@
 
 <sub>Conceptual illustration of the visual direction, not a live screenshot. The real terminal capture is below.</sub>
 
+[Social preview image · 1280 × 640](assets/social-preview.png)
+
 [![validate](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml/badge.svg)](https://github.com/MakeItEzzz555/claude-widget-kit/actions/workflows/validate.yml)
 ![claude code](https://img.shields.io/badge/Claude%20Code-mods-d97757)
 ![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
