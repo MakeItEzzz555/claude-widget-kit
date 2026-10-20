@@ -1,11 +1,11 @@
 {
   "name": "claude-widget-kit",
-  "description": "Live widgets for Claude Code: usage rings, effort meter, task ETA and an agents panel.",
+  "description": "Live widgets for Claude Code: usage rings, effort meter, task ETA and a session dashboard.",
   "owner": { "name": "MakeItEzzz555" },
   "plugins": [
     {
       "name": "turn-meters",
-      "description": "Effort meter, task progress with ETA, usage rings and agent cards under the working line",
+      "description": "Usage rings, effort, task ETA and a live session dashboard: tokens, turns, context, limits, agents and activity",
       "source": "./plugins/turn-meters",
       "category": "productivity",
       "keywords": ["widgets", "usage", "rate-limits", "progress", "agents", "mods"]

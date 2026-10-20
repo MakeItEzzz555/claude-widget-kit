@@ -7,8 +7,38 @@ export type Plan = { tasks: Task[]; startedAt: number; lastDoneAt: number; baseD
 /** The model and effort a loop's last request used. */
 export type Loop = { model: string; effort: Effort | null }
 export type AgentCard = { id: string; description: string; type: string; status: string }
-/** Percent used, 0-100; null until a reading exists. */
-export type Usage = { fiveHour: number | null; week: number | null; context: number | null }
+/**
+ * The session's readings from `$.session.usage()`. Percents are used, 0-100; times are clock
+ * milliseconds; each is null until a reading exists.
+ */
+export type Usage = {
+  fiveHour: number | null
+  week: number | null
+  context: number | null
+  fiveHourResetsAt: number | null
+  weekResetsAt: number | null
+  contextTokens: number | null
+  contextWindow: number | null
+  startedAt: number | null
+}
+export type Tone = 'ok' | 'bad' | 'edit' | 'agent' | 'idle'
+/** One row of the activity feed. `path` is kept for counting files touched and never drawn. */
+export type Activity = { at: number; verb: string; target: string; tone: Tone; note: string | null; path?: string }
+/** Summed from `turn.complete` usage; every loop's turns count. */
+export type Tokens = { input: number; output: number; cacheRead: number; cacheWrite: number }
+export type Insights = {
+  /** Main-loop turns that ended with an answer; `recent` holds their lengths, newest last. */
+  turns: { count: number; totalMs: number; lastMs: number | null; recent: number[] }
+  /** When the main loop's running turn began; null while idle. */
+  turnStartedAt: number | null
+  tokens: Tokens | null
+  /** Output tokens of each main-loop turn, newest last. */
+  outputs: number[]
+  compactions: number
+  activity: Activity[]
+  /** Distinct files edited or written. */
+  files: string[]
+}
 
 declare module 'claude-code' {
   interface PluginState {
@@ -19,6 +49,7 @@ declare module 'claude-code' {
       plans: Record<string, Plan>
       agents: AgentCard[]
       usage: Usage
+      insights: Insights
       now: number
     }
   }
